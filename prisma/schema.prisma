@@ -1,0 +1,106 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Admins {
+  id             Int       @id @unique @default(autoincrement())
+  phone_number   String    @unique
+  password       String
+  is_super_admin Boolean   @default(false)
+  hospital_id    Int
+  hospital       Hospitals @relation(fields: [hospital_id], references: [id])
+  created_at     DateTime  @default(now())
+  updated_at     DateTime  @default(now())
+}
+
+model Doctors {
+  id             Int         @id @unique @default(autoincrement())
+  phone_number   String      @unique
+  password       String
+  specialization String
+  hospital_id    Int
+  department_id  Int
+  hospital       Hospitals   @relation(fields: [hospital_id], references: [id])
+  department     Departments @relation(fields: [department_id], references: [id])
+  created_at     DateTime    @default(now())
+  updated_at     DateTime    @default(now())
+}
+
+model Hospitals {
+  id             Int              @id @unique @default(autoincrement())
+  name           String
+  slug           String
+  adress         String
+  phone          String
+  admins         Admins[]
+  doctors        Doctors[]
+  potients       Potients[]
+  departments    Departments[]
+  answers        Answers[]
+  questionnaires Questionnaires[]
+  created_at     DateTime         @default(now())
+  updated_at     DateTime         @default(now())
+}
+
+model Potients {
+  id          Int       @id @unique @default(autoincrement())
+  full_name   String
+  hospital_id Int
+  hospital    Hospitals @relation(fields: [hospital_id], references: [id])
+  created_at  DateTime  @default(now())
+  updated_at  DateTime  @default(now())
+}
+
+model Departments {
+  id             Int              @id @unique @default(autoincrement())
+  name           String
+  hospital_id    Int
+  doctors        Doctors[]
+  questionnaires Questionnaires[]
+  hospital       Hospitals        @relation(fields: [hospital_id], references: [id])
+  created_at     DateTime         @default(now())
+  updated_at     DateTime         @default(now())
+}
+
+model Questionnaires {
+  id            Int         @id @unique @default(autoincrement())
+  hospital_id   Int
+  department_id Int
+  title         String
+  question      Questions[]
+  hospital      Hospitals   @relation(fields: [hospital_id], references: [id])
+  department    Departments @relation(fields: [department_id], references: [id])
+  is_active     Boolean     @default(true)
+  created_at    DateTime    @default(now())
+  updated_at    DateTime    @default(now())
+}
+
+model Questions {
+  id                Int            @id @unique @default(autoincrement())
+  questionnaires_id Int
+  question_text     String
+  answers           Answers[]
+  questionnaire     Questionnaires @relation(fields: [questionnaires_id], references: [id])
+  created_at        DateTime       @default(now())
+  updated_at        DateTime       @default(now())
+}
+
+model Answers {
+  id          Int       @id @unique @default(autoincrement())
+  hospital_id Int
+  question_id Int
+  answer_text String
+  hospital    Hospitals @relation(fields: [hospital_id], references: [id])
+  question    Questions @relation(fields: [question_id], references: [id])
+  created_at  DateTime  @default(now())
+  updated_at  DateTime  @default(now())
+}
