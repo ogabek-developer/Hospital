@@ -21,7 +21,7 @@ export class AdminService {
   async findOne(id: number) {
     const admin = await this.prismaService.admins.findUnique({where: {id}});
     if(!admin) throw new NotFoundException('Admin not found');
-    return admin;
+    return admin ;
   }
 
   async update(id: number, dto: UpdateAdminDto) {
