@@ -38,9 +38,8 @@ model Doctors {
 model Hospitals {
   id             Int              @id @unique @default(autoincrement())
   name           String
-  slug           String
-  adress         String
-  phone          String
+  address         String
+  phone          String           @unique
   admins         Admins[]
   doctors        Doctors[]
   potients       Potients[]

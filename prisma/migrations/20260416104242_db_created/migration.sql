@@ -29,8 +29,7 @@ CREATE TABLE "Doctors" (
 CREATE TABLE "Hospitals" (
     "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
-    "slug" TEXT NOT NULL,
-    "adress" TEXT NOT NULL,
+    "address" TEXT NOT NULL,
     "phone" TEXT NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -110,6 +109,9 @@ CREATE UNIQUE INDEX "Doctors_phone_number_key" ON "Doctors"("phone_number");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Hospitals_id_key" ON "Hospitals"("id");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Hospitals_phone_key" ON "Hospitals"("phone");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Potients_id_key" ON "Potients"("id");
