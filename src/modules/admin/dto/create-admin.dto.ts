@@ -21,7 +21,7 @@ export class CreateAdminDto {
   @IsString({ message: 'Password must be a string' })
   @IsNotEmpty({ message: 'Password is required' })
   @Length(6, 12, {
-    message: 'Password min 6 characters long, Max 12 characters short  ',
+    message: 'Password min 6 characters long, Max 12 characters short',
   })
   password: string;
   @IsBoolean({ message: 'Invalid boolean value. Expected true or false' })
