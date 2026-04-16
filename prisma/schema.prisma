@@ -54,6 +54,7 @@ model Potients {
   id          Int       @id @unique @default(autoincrement())
   full_name   String
   hospital_id Int
+  @@unique([full_name, hospital_id])
   hospital    Hospitals @relation(fields: [hospital_id], references: [id])
   created_at  DateTime  @default(now())
   updated_at  DateTime  @default(now())

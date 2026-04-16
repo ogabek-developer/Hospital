@@ -117,6 +117,9 @@ CREATE UNIQUE INDEX "Hospitals_phone_key" ON "Hospitals"("phone");
 CREATE UNIQUE INDEX "Potients_id_key" ON "Potients"("id");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "Potients_full_name_hospital_id_key" ON "Potients"("full_name", "hospital_id");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "Departments_id_key" ON "Departments"("id");
 
 -- CreateIndex
