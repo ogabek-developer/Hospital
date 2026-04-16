@@ -6,6 +6,8 @@ import { HospitalModule } from './modules/hospital/hospital.module';
 import { DoctorModule } from './modules/doctor/doctor.module';
 import { PotientsModule } from './modules/potient/potient.module';
 import { QuestionModule } from './modules/question/question.module';
+import { AnswerModule } from './modules/answer/answer.module';
+import { QuestionnaireModule } from './modules/questionnaire/questionnaire.module';
 
 @Module({
   imports: [
@@ -18,7 +20,9 @@ import { QuestionModule } from './modules/question/question.module';
     HospitalModule,
     DoctorModule,
     PotientsModule,
-    QuestionModule
+    QuestionModule,
+    AnswerModule,
+    QuestionnaireModule
   ],
   controllers: [],
   providers: [],

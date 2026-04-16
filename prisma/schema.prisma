@@ -84,6 +84,8 @@ model Questionnaires {
   is_active     Boolean     @default(true)
   created_at    DateTime    @default(now())
   updated_at    DateTime    @default(now())
+
+  @@unique([hospital_id, department_id])
 }
 
 model Questions {
@@ -99,14 +101,19 @@ model Questions {
 }
 
 model Answers {
-  id          Int       @id @unique @default(autoincrement())
+  id          Int @id @default(autoincrement())
   hospital_id Int
   question_id Int
-  answer_text String
   potient_id  Int
-  potient     Potients  @relation(fields: [potient_id], references: [id])
-  hospital    Hospitals @relation(fields: [hospital_id], references: [id])
-  question    Questions @relation(fields: [question_id], references: [id])
-  created_at  DateTime  @default(now())
-  updated_at  DateTime  @default(now())
+
+  answer_text String
+
+  potient  Potients  @relation(fields: [potient_id], references: [id])
+  hospital Hospitals @relation(fields: [hospital_id], references: [id])
+  question Questions @relation(fields: [question_id], references: [id])
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@unique([hospital_id, question_id, potient_id])
 }
