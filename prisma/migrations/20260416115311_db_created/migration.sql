@@ -88,6 +88,7 @@ CREATE TABLE "Answers" (
     "id" SERIAL NOT NULL,
     "hospital_id" INTEGER NOT NULL,
     "question_id" INTEGER NOT NULL,
+    "potient_id" INTEGER NOT NULL,
     "answer_text" TEXT NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -118,6 +119,9 @@ CREATE UNIQUE INDEX "Potients_id_key" ON "Potients"("id");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Departments_id_key" ON "Departments"("id");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Departments_name_hospital_id_key" ON "Departments"("name", "hospital_id");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Questionnaires_id_key" ON "Questionnaires"("id");
@@ -151,6 +155,9 @@ ALTER TABLE "Questionnaires" ADD CONSTRAINT "Questionnaires_department_id_fkey" 
 
 -- AddForeignKey
 ALTER TABLE "Questions" ADD CONSTRAINT "Questions_questionnaires_id_fkey" FOREIGN KEY ("questionnaires_id") REFERENCES "Questionnaires"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Answers" ADD CONSTRAINT "Answers_potient_id_fkey" FOREIGN KEY ("potient_id") REFERENCES "Potients"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Answers" ADD CONSTRAINT "Answers_hospital_id_fkey" FOREIGN KEY ("hospital_id") REFERENCES "Hospitals"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
