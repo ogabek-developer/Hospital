@@ -38,7 +38,7 @@ model Doctors {
 model Hospitals {
   id             Int              @id @unique @default(autoincrement())
   name           String
-  address         String
+  address        String
   phone          String           @unique
   admins         Admins[]
   doctors        Doctors[]
@@ -54,10 +54,12 @@ model Potients {
   id          Int       @id @unique @default(autoincrement())
   full_name   String
   hospital_id Int
-  @@unique([full_name, hospital_id])
+  answers     Answers[]
   hospital    Hospitals @relation(fields: [hospital_id], references: [id])
   created_at  DateTime  @default(now())
   updated_at  DateTime  @default(now())
+
+  @@unique([full_name, hospital_id])
 }
 
 model Departments {
@@ -85,13 +87,15 @@ model Questionnaires {
 }
 
 model Questions {
-  id                Int            @id @unique @default(autoincrement())
-  questionnaires_id Int
-  question_text     String
-  answers           Answers[]
-  questionnaire     Questionnaires @relation(fields: [questionnaires_id], references: [id])
-  created_at        DateTime       @default(now())
-  updated_at        DateTime       @default(now())
+  id               Int            @id @unique @default(autoincrement())
+  questionnaire_id Int
+  question_text    String
+  answers          Answers[]
+  questionnaire    Questionnaires @relation(fields: [questionnaire_id], references: [id])
+  created_at       DateTime       @default(now())
+  updated_at       DateTime       @default(now())
+
+  @@unique([questionnaire_id, question_text])
 }
 
 model Answers {
@@ -99,6 +103,8 @@ model Answers {
   hospital_id Int
   question_id Int
   answer_text String
+  potient_id  Int
+  potient     Potients  @relation(fields: [potient_id], references: [id])
   hospital    Hospitals @relation(fields: [hospital_id], references: [id])
   question    Questions @relation(fields: [question_id], references: [id])
   created_at  DateTime  @default(now())

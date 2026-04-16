@@ -75,7 +75,7 @@ CREATE TABLE "Questionnaires" (
 -- CreateTable
 CREATE TABLE "Questions" (
     "id" SERIAL NOT NULL,
-    "questionnaires_id" INTEGER NOT NULL,
+    "questionnaire_id" INTEGER NOT NULL,
     "question_text" TEXT NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -89,6 +89,7 @@ CREATE TABLE "Answers" (
     "hospital_id" INTEGER NOT NULL,
     "question_id" INTEGER NOT NULL,
     "answer_text" TEXT NOT NULL,
+    "potient_id" INTEGER NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
@@ -129,6 +130,9 @@ CREATE UNIQUE INDEX "Questionnaires_id_key" ON "Questionnaires"("id");
 CREATE UNIQUE INDEX "Questions_id_key" ON "Questions"("id");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "Questions_questionnaire_id_question_text_key" ON "Questions"("questionnaire_id", "question_text");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "Answers_id_key" ON "Answers"("id");
 
 -- AddForeignKey
@@ -153,7 +157,10 @@ ALTER TABLE "Questionnaires" ADD CONSTRAINT "Questionnaires_hospital_id_fkey" FO
 ALTER TABLE "Questionnaires" ADD CONSTRAINT "Questionnaires_department_id_fkey" FOREIGN KEY ("department_id") REFERENCES "Departments"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Questions" ADD CONSTRAINT "Questions_questionnaires_id_fkey" FOREIGN KEY ("questionnaires_id") REFERENCES "Questionnaires"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Questions" ADD CONSTRAINT "Questions_questionnaire_id_fkey" FOREIGN KEY ("questionnaire_id") REFERENCES "Questionnaires"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Answers" ADD CONSTRAINT "Answers_potient_id_fkey" FOREIGN KEY ("potient_id") REFERENCES "Potients"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Answers" ADD CONSTRAINT "Answers_hospital_id_fkey" FOREIGN KEY ("hospital_id") REFERENCES "Hospitals"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

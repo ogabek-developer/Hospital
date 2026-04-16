@@ -5,6 +5,7 @@ import { AdminModule } from './modules/admin/admin.module';
 import { HospitalModule } from './modules/hospital/hospital.module';
 import { DoctorModule } from './modules/doctor/doctor.module';
 import { PotientsModule } from './modules/potient/potient.module';
+import { QuestionModule } from './modules/question/question.module';
 
 @Module({
   imports: [
@@ -16,7 +17,8 @@ import { PotientsModule } from './modules/potient/potient.module';
     AdminModule,
     HospitalModule,
     DoctorModule,
-    PotientsModule
+    PotientsModule,
+    QuestionModule
   ],
   controllers: [],
   providers: [],

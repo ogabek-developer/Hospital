@@ -1,0 +1,36 @@
+import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
+import { CreateQuestionDto } from './dto/create-question.dto';
+import { UpdateQuestionDto } from './dto/update-question.dto';
+import { PrismaService } from 'src/providers/prisma/prisma.service';
+
+@Injectable()
+export class QuestionService {
+  constructor(private readonly prismaService: PrismaService) { };
+
+  async create(dto: CreateQuestionDto) {
+    const exists = await this.prismaService.questions.findUnique({where : {questionnaire_id_question_text : dto}})
+    if(exists) throw new ConflictException("Question already exist")
+      const createQuestion = await this.prismaService.questions.create({data : dto})
+    return createQuestion
+  }
+
+  async findAll() {
+    return this.prismaService.questions.findMany()
+  }
+
+ async findOne(id: number) {
+    const FindQuestion = await this.prismaService.questions.findUnique({where : {id}})
+    if(!FindQuestion) throw new NotFoundException("Question not found")
+    return FindQuestion
+  }
+
+ async update(id: number, updateQuestionDto: UpdateQuestionDto) {
+    await this.findOne(id)
+    return this.prismaService.questions.update({where : {id}, data : updateQuestionDto} )
+  }
+
+ async remove(id: number) {
+    await this.findOne(id)
+    return this.prismaService.questions.delete({where : {id}})
+  }
+}
