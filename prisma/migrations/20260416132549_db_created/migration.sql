@@ -124,6 +124,9 @@ CREATE UNIQUE INDEX "Potients_full_name_hospital_id_key" ON "Potients"("full_nam
 CREATE UNIQUE INDEX "Departments_id_key" ON "Departments"("id");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "Departments_name_hospital_id_key" ON "Departments"("name", "hospital_id");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "Questionnaires_id_key" ON "Questionnaires"("id");
 
 -- CreateIndex
