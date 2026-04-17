@@ -6,6 +6,7 @@ import { HospitalModule } from './modules/hospital/hospital.module';
 import { DoctorModule } from './modules/doctor/doctor.module';
 import { PotientsModule } from './modules/potient/potient.module';
 import { QuestionModule } from './modules/question/question.module';
+import { DepartmentModule } from './modules/department/department.module';
 import { AnswerModule } from './modules/answer/answer.module';
 import { QuestionnaireModule } from './modules/questionnaire/questionnaire.module';
 
@@ -21,6 +22,7 @@ import { QuestionnaireModule } from './modules/questionnaire/questionnaire.modul
     DoctorModule,
     PotientsModule,
     QuestionModule,
+    DepartmentModule
     AnswerModule,
     QuestionnaireModule
   ],
