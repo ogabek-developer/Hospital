@@ -7,6 +7,8 @@ import { DoctorModule } from './modules/doctor/doctor.module';
 import { PotientsModule } from './modules/potient/potient.module';
 import { QuestionModule } from './modules/question/question.module';
 import { DepartmentModule } from './modules/department/department.module';
+import { AnswerModule } from './modules/answer/answer.module';
+import { QuestionnaireModule } from './modules/questionnaire/questionnaire.module';
 
 @Module({
   imports: [
@@ -21,6 +23,8 @@ import { DepartmentModule } from './modules/department/department.module';
     PotientsModule,
     QuestionModule,
     DepartmentModule
+    AnswerModule,
+    QuestionnaireModule
   ],
   controllers: [],
   providers: [],
