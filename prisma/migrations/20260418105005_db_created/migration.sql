@@ -88,10 +88,10 @@ CREATE TABLE "Answers" (
     "id" SERIAL NOT NULL,
     "hospital_id" INTEGER NOT NULL,
     "question_id" INTEGER NOT NULL,
-    "answer_text" TEXT NOT NULL,
     "potient_id" INTEGER NOT NULL,
+    "answer_text" TEXT NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "Answers_pkey" PRIMARY KEY ("id")
 );
@@ -130,13 +130,16 @@ CREATE UNIQUE INDEX "Departments_name_hospital_id_key" ON "Departments"("name", 
 CREATE UNIQUE INDEX "Questionnaires_id_key" ON "Questionnaires"("id");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "Questionnaires_hospital_id_department_id_key" ON "Questionnaires"("hospital_id", "department_id");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "Questions_id_key" ON "Questions"("id");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Questions_questionnaire_id_question_text_key" ON "Questions"("questionnaire_id", "question_text");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Answers_id_key" ON "Answers"("id");
+CREATE UNIQUE INDEX "Answers_hospital_id_question_id_potient_id_key" ON "Answers"("hospital_id", "question_id", "potient_id");
 
 -- AddForeignKey
 ALTER TABLE "Admins" ADD CONSTRAINT "Admins_hospital_id_fkey" FOREIGN KEY ("hospital_id") REFERENCES "Hospitals"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
