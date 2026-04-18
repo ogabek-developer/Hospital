@@ -22,7 +22,7 @@ import { QuestionnaireModule } from './modules/questionnaire/questionnaire.modul
     DoctorModule,
     PotientsModule,
     QuestionModule,
-    DepartmentModule
+    DepartmentModule,
     AnswerModule,
     QuestionnaireModule
   ],
