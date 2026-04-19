@@ -16,8 +16,8 @@ model Admins {
   phone_number   String    @unique
   password       String
   is_super_admin Boolean   @default(false)
-  hospital_id    Int
-  hospital       Hospitals @relation(fields: [hospital_id], references: [id])
+  hospital_id    Int?       
+  hospital       Hospitals? @relation(fields: [hospital_id], references: [id])
   created_at     DateTime  @default(now())
   updated_at     DateTime  @default(now())
 }
@@ -71,7 +71,7 @@ model Departments {
   hospital       Hospitals        @relation(fields: [hospital_id], references: [id])
   created_at     DateTime         @default(now())
   updated_at     DateTime         @default(now())
-  
+
   @@unique([name, hospital_id])
 }
 
