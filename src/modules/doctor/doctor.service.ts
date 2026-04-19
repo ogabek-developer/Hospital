@@ -15,21 +15,37 @@ export class DoctorService {
       where: { phone_number: dto.phone_number },
     });
     if (exists) throw new ConflictException('Doctor already exist');
-    const createdDoctor = await this.prismaService.doctors.create({
+    const [hospital, department] = await Promise.all([
+      dto.hospital_id
+        ? this.prismaService.hospitals.findUnique({
+            where: { id: dto.hospital_id },
+          })
+        : null,
+      dto.department_id
+        ? this.prismaService.departments.findUnique({
+            where: { id: dto.department_id },
+          })
+        : null,
+    ]);
+    if (!hospital) throw new NotFoundException('Hospital not found');
+    if (!department) throw new NotFoundException('Department not found');
+    const doctor = await this.prismaService.doctors.create({
       data: dto,
     });
-    const hospital = await this.prismaService.hospitals.findUnique({where : {id : dto.hospital_id}}) ;
-    if(!hospital) throw new NotFoundException("Hospital not found")
-    return createdDoctor;
+    const doctorUrl = `http://127.0.0.1:4000/h/${hospital.id}/${department.name}/d/${doctor.id}`;
+    return { ...doctor, doctorUrl };
   }
 
   async findAll() {
-    return await this.prismaService.doctors.findMany();
+    return await this.prismaService.doctors.findMany({
+      include: { hospital: true, department: true },
+    });
   }
 
   async findOne(id: number) {
     const doctor = await this.prismaService.doctors.findUnique({
       where: { id },
+      include: { hospital: true, department: true },
     });
     if (!doctor) throw new NotFoundException('Doctor not found');
     return doctor;
