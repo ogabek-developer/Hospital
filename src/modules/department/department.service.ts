@@ -12,20 +12,20 @@ export class DepartmentService {
       where: { name_hospital_id: dto },
     });
     if (exists) throw new ConflictException('Department already exist');
+    const hospital = await this.prismaService.hospitals.findUnique({where : { id : dto.hospital_id}}) ;
+    if(!hospital) throw new NotFoundException("Hospital not found")
     const createdDepartment = await this.prismaService.departments.create({
       data: dto,
     });
-    const hospital = await this.prismaService.hospitals.findUnique({where : { id : dto.hospital_id}}) ;
-    if(!hospital) throw new NotFoundException("Hospital not found")
     return createdDepartment;
   } 
 
   async findAll() {
-    return this.prismaService.departments.findMany();
+    return this.prismaService.departments.findMany({include: {hospital: true}});
   }
 
   async findOne(id: number) {
-    const department = await this.prismaService.departments.findUnique({where: {id}});
+    const department = await this.prismaService.departments.findUnique({where: {id}, include: {hospital: true}});
     if(!department) throw new NotFoundException('Department not found');
     return department;
   }
