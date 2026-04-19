@@ -4,7 +4,7 @@ CREATE TABLE "Admins" (
     "phone_number" TEXT NOT NULL,
     "password" TEXT NOT NULL,
     "is_super_admin" BOOLEAN NOT NULL DEFAULT false,
-    "hospital_id" INTEGER NOT NULL,
+    "hospital_id" INTEGER,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
@@ -142,7 +142,7 @@ CREATE UNIQUE INDEX "Questions_questionnaire_id_question_text_key" ON "Questions
 CREATE UNIQUE INDEX "Answers_hospital_id_question_id_potient_id_key" ON "Answers"("hospital_id", "question_id", "potient_id");
 
 -- AddForeignKey
-ALTER TABLE "Admins" ADD CONSTRAINT "Admins_hospital_id_fkey" FOREIGN KEY ("hospital_id") REFERENCES "Hospitals"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Admins" ADD CONSTRAINT "Admins_hospital_id_fkey" FOREIGN KEY ("hospital_id") REFERENCES "Hospitals"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Doctors" ADD CONSTRAINT "Doctors_hospital_id_fkey" FOREIGN KEY ("hospital_id") REFERENCES "Hospitals"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

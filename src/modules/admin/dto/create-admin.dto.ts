@@ -2,6 +2,7 @@ import {
   IsBoolean,
   IsInt,
   IsNotEmpty,
+  IsOptional,
   IsString,
   Length,
   Matches,
@@ -26,7 +27,7 @@ export class CreateAdminDto {
   password: string;
   @IsBoolean({ message: 'Invalid boolean value. Expected true or false' })
   is_super_admin: boolean;
+  @IsOptional()
   @IsInt({ message: 'Hospital id must be a Integer !' })
-  @IsNotEmpty({ message: 'Hospital id is required !' })
-  hospital_id: number;
+  hospital_id?: number;
 }

@@ -9,7 +9,7 @@ export class AdminController {
 
   @Post()
   @HttpCode(201)
-  create(dto: CreateAdminDto) {
+  create(@Body() dto: CreateAdminDto) {
     return this.adminService.create(dto);
   }
 
