@@ -11,6 +11,8 @@ export class PotientService {
     const exists = await this.prismaService.potients.findUnique({ where: { full_name_hospital_id: createPotientDto } })
     if (exists) throw new ConflictException("Potient is already exist")
     const createdPotient = await this.prismaService.potients.create({ data: createPotientDto })
+    const hospital = await this.prismaService.hospitals.findUnique({where : {id : createPotientDto.hospital_id}}) ;
+    if(!hospital) throw new NotFoundException("Hospital not found")
     return createdPotient
   }
 

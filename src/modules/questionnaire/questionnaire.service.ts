@@ -18,6 +18,8 @@ export class QuestionnaireService {
     const createdQuestionnare = await this.prismaService.questionnaires.create({
       data: dto,
     });
+    const hospital = await this.prismaService.hospitals.findUnique({where : {id : dto.hospital_id}}) ;
+    if(!hospital) throw new NotFoundException("Hospital not found ")
     return createdQuestionnare;
   }
 

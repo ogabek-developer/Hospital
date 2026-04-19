@@ -15,6 +15,8 @@ export class DepartmentService {
     const createdDepartment = await this.prismaService.departments.create({
       data: dto,
     });
+    const hospital = await this.prismaService.hospitals.findUnique({where : { id : dto.hospital_id}}) ;
+    if(!hospital) throw new NotFoundException("Hospital not found")
     return createdDepartment;
   } 
 

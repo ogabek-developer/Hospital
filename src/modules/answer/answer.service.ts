@@ -14,6 +14,8 @@ export class AnswerService {
     const createdAnswer = await this.prismaService.answers.create({
       data: dto,
     });
+    const hospitald = await this.prismaService.hospitals.findUnique({where : {id : dto.hospital_id}}) ;
+    if(!hospitald) throw new NotFoundException("Hospital not found")
     return createdAnswer;
   }
 

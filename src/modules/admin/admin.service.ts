@@ -10,6 +10,8 @@ export class AdminService {
   async create(dto: CreateAdminDto) {
     const exist = await this.prismaService.admins.findUnique({where: {phone_number: dto.phone_number}});
     if(exist) throw new ConflictException('Admin already exist');
+    const hospital = await this.prismaService.hospitals.findUnique({where : {id : dto.hospital_id}})
+    if(!hospital) throw new NotFoundException("Hospital not found")
     const admin = await this.prismaService.admins.create({data: dto});
     return admin;
   }
