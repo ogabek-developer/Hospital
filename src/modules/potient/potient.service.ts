@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common';
 import { CreatePotientDto } from './dto/create-potient.dto';
 import { UpdatePotientDto } from './dto/update-potient.dto';
-import { PrismaService } from 'src/providers/prisma/prisma.service';
+import { PrismaService } from 'providers/prisma/prisma.service';
 
 @Injectable()
 export class PotientService {

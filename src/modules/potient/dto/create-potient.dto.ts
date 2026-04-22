@@ -1,7 +1,14 @@
 import { IsNotEmpty, IsString, IsUUID, Matches } from 'class-validator';
 import { Transform } from 'class-transformer';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class CreatePotientDto {
+
+  @ApiProperty({
+    example: '+998901234567',
+    description: 'Patient phone number',
+    required: true,
+  })
   @Transform(({ value }) => value.trim())
   @IsString({ message: 'Phone number must be a string' })
   @IsNotEmpty({ message: 'Phone number is required' })
@@ -14,6 +21,13 @@ export class CreatePotientDto {
   )
   phone_number!: string;
 
+
+  @ApiProperty({
+    example: '550e8400-e29b-41d4-a716-446655440000',
+    description: 'Hospital UUID',
+    format: 'uuid',
+    required: true,
+  })
   @IsUUID('4', { message: 'Hospital id must be a valid UUID' })
   @IsNotEmpty({ message: 'Hospital id is required' })
   hospital_id!: string;

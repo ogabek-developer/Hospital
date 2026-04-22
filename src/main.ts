@@ -1,7 +1,8 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { InternalServerErrorException, ValidationPipe } from '@nestjs/common';
-import cookieParser from 'cookie-parser';  
+import cookieParser from 'cookie-parser';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   try {
@@ -14,6 +15,13 @@ async function bootstrap() {
         transform: true,
       }),
     );
+    const config = new DocumentBuilder()
+      .setTitle('MedCore REST-API')
+      .setDescription("The Powered by Og'abek | Shamsiddin ")
+      .setVersion('1.0')
+      .build();
+    const documentFactory = () => SwaggerModule.createDocument(app, config);
+    SwaggerModule.setup('api/docs', app, documentFactory);
     await app.listen(PORT, () =>
       console.log(`Server is running on http://127.0.0.1:${PORT}`),
     );

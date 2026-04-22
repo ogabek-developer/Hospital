@@ -1,7 +1,16 @@
 import { IsNotEmpty, IsString, Length, Matches } from 'class-validator';
 import { Transform } from 'class-transformer';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateHospitalDto {
+
+  @ApiProperty({
+    example: 'Central City Hospital',
+    description: 'Hospital name',
+    minLength: 3,
+    maxLength: 50,
+    required: true,
+  })
   @Transform(({ value }) => value.trim())
   @IsString({ message: 'Hospital name must be a string' })
   @IsNotEmpty({ message: 'Hospital name is required' })
@@ -10,6 +19,14 @@ export class CreateHospitalDto {
   })
   name: string;
 
+
+  @ApiProperty({
+    example: '123 Main Street, Tashkent',
+    description: 'Hospital address',
+    minLength: 5,
+    maxLength: 100,
+    required: true,
+  })
   @Transform(({ value }) => value.trim())
   @IsString({ message: 'Address must be a string' })
   @IsNotEmpty({ message: 'Address is required' })
@@ -18,6 +35,12 @@ export class CreateHospitalDto {
   })
   address: string;
 
+
+  @ApiProperty({
+    example: '+998901234567',
+    description: 'Hospital phone number',
+    required: true,
+  })
   @Transform(({ value }) => value.trim())
   @IsString({ message: 'Phone must be a string' })
   @IsNotEmpty({ message: 'Phone number is required' })
