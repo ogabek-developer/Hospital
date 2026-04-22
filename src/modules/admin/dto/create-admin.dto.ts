@@ -31,6 +31,6 @@ export class CreateAdminDto {
   @IsBoolean({ message: 'Invalid boolean value. Expected true or false' })
   is_super_admin: boolean;
   @IsOptional()
-  @IsInt({ message: 'Hospital id must be a String !' })
+  @IsString({ message: 'Hospital id must be a string !' })
   hospital_id?: string;
 }
