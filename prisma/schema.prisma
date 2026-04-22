@@ -12,23 +12,25 @@ datasource db {
 }
 
 model Admins {
-  id             Int       @id @unique @default(autoincrement())
-  phone_number   String    @unique
+  id             String     @id @unique @default(uuid())
+  phone_number   String     @unique
   password       String
-  is_super_admin Boolean   @default(false)
-  hospital_id    Int?       
+  refresh_token  String?
+  is_super_admin Boolean    @default(false)
+  hospital_id    String?
   hospital       Hospitals? @relation(fields: [hospital_id], references: [id])
-  created_at     DateTime  @default(now())
-  updated_at     DateTime  @default(now())
+  created_at     DateTime   @default(now())
+  updated_at     DateTime   @default(now())
 }
 
 model Doctors {
-  id             Int         @id @unique @default(autoincrement())
+  id             String      @id @unique @default(uuid())
   phone_number   String      @unique
   password       String
+  refresh_token  String?
   specialization String
-  hospital_id    Int
-  department_id  Int
+  hospital_id    String
+  department_id  String
   hospital       Hospitals   @relation(fields: [hospital_id], references: [id])
   department     Departments @relation(fields: [department_id], references: [id])
   created_at     DateTime    @default(now())
@@ -36,7 +38,7 @@ model Doctors {
 }
 
 model Hospitals {
-  id             Int              @id @unique @default(autoincrement())
+  id             String           @id @unique @default(uuid())
   name           String
   address        String
   phone          String           @unique
@@ -51,21 +53,21 @@ model Hospitals {
 }
 
 model Potients {
-  id          Int       @id @unique @default(autoincrement())
-  full_name   String
-  hospital_id Int
-  answers     Answers[]
-  hospital    Hospitals @relation(fields: [hospital_id], references: [id])
-  created_at  DateTime  @default(now())
-  updated_at  DateTime  @default(now())
+  id           String    @id @unique @default(uuid())
+  hospital_id  String
+  phone_number String    @unique
+  answers      Answers[]
+  hospital     Hospitals @relation(fields: [hospital_id], references: [id])
+  created_at   DateTime  @default(now())
+  updated_at   DateTime  @default(now())
 
-  @@unique([full_name, hospital_id])
+  @@unique([hospital_id])
 }
 
 model Departments {
-  id             Int              @id @unique @default(autoincrement())
+  id             String           @id @unique @default(uuid())
   name           String
-  hospital_id    Int
+  hospital_id    String
   doctors        Doctors[]
   questionnaires Questionnaires[]
   hospital       Hospitals        @relation(fields: [hospital_id], references: [id])
@@ -76,9 +78,9 @@ model Departments {
 }
 
 model Questionnaires {
-  id            Int         @id @unique @default(autoincrement())
-  hospital_id   Int
-  department_id Int
+  id            String      @id @unique @default(uuid())
+  hospital_id   String
+  department_id String
   title         String
   question      Questions[]
   hospital      Hospitals   @relation(fields: [hospital_id], references: [id])
@@ -91,8 +93,8 @@ model Questionnaires {
 }
 
 model Questions {
-  id               Int            @id @unique @default(autoincrement())
-  questionnaire_id Int
+  id               String         @id @unique @default(uuid())
+  questionnaire_id String
   question_text    String
   answers          Answers[]
   questionnaire    Questionnaires @relation(fields: [questionnaire_id], references: [id])
@@ -103,19 +105,16 @@ model Questions {
 }
 
 model Answers {
-  id          Int @id @default(autoincrement())
-  hospital_id Int
-  question_id Int
-  potient_id  Int
-
+  id          String    @id @default(uuid())
+  hospital_id String
+  question_id String
+  potient_id  String
   answer_text String
-
-  potient  Potients  @relation(fields: [potient_id], references: [id])
-  hospital Hospitals @relation(fields: [hospital_id], references: [id])
-  question Questions @relation(fields: [question_id], references: [id])
-
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  potient     Potients  @relation(fields: [potient_id], references: [id])
+  hospital    Hospitals @relation(fields: [hospital_id], references: [id])
+  question    Questions @relation(fields: [question_id], references: [id])
+  created_at  DateTime  @default(now())
+  updated_at  DateTime  @updatedAt
 
   @@unique([hospital_id, question_id, potient_id])
 }

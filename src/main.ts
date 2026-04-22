@@ -1,12 +1,14 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { InternalServerErrorException, ValidationPipe } from '@nestjs/common';
+import cookieParser from 'cookie-parser';  
 
 async function bootstrap() {
   try {
     const app = await NestFactory.create(AppModule);
     const PORT = process.env.PORT ?? 3000;
     app.setGlobalPrefix('api');
+    app.use(cookieParser());
     app.useGlobalPipes(
       new ValidationPipe({
         transform: true,

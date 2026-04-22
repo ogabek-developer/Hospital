@@ -13,9 +13,9 @@ export class PotientService {
 
   async create(createPotientDto: CreatePotientDto) {
     const exists = await this.prismaService.potients.findUnique({
-      where: { full_name_hospital_id: createPotientDto },
+      where: { phone_number: createPotientDto.phone_number },
     });
-    if (exists) throw new ConflictException('Potient is already exist');
+    if (exists) throw new ConflictException('Potient already exist');
     const hospital = await this.prismaService.hospitals.findUnique({
       where: { id: createPotientDto.hospital_id },
     });
@@ -32,7 +32,7 @@ export class PotientService {
     });
   }
 
-  async findOne(id: number) {
+  async findOne(id: string) {
     const findPotient = await this.prismaService.potients.findUnique({
       where: { id },
       include: { hospital: true },
@@ -41,7 +41,7 @@ export class PotientService {
     return findPotient;
   }
 
-  async update(id: number, updatePotientDto: UpdatePotientDto) {
+  async update(id: string, updatePotientDto: UpdatePotientDto) {
     await this.findOne(id);
     return this.prismaService.potients.update({
       where: { id },
@@ -49,7 +49,7 @@ export class PotientService {
     });
   }
 
-  async remove(id: number) {
+  async remove(id: string) {
     await this.findOne(id);
     return this.prismaService.potients.delete({ where: { id } });
   }

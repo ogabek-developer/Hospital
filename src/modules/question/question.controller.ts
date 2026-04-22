@@ -9,8 +9,8 @@ export class QuestionController {
 
   @Post()
   @HttpCode(201)
-  create(@Body() createQuestionDto: CreateQuestionDto) {
-    return this.questionService.create(createQuestionDto);
+  create(@Body() dto: CreateQuestionDto) {
+    return this.questionService.create(dto);
   }
 
   @Get()
@@ -22,18 +22,18 @@ export class QuestionController {
   @Get(':id')
   @HttpCode(200)
   findOne(@Param('id') id: string) {
-    return this.questionService.findOne(+id);
+    return this.questionService.findOne(id);
   }
 
   @Patch(':id')
   @HttpCode(200)
-  update(@Param('id') id: string, @Body() updateQuestionDto: UpdateQuestionDto) {
-    return this.questionService.update(+id, updateQuestionDto);
+  update(@Param('id') id: string, @Body() dto: UpdateQuestionDto) {
+    return this.questionService.update(id, dto);
   }
 
   @Delete(':id')
   @HttpCode(204)
   remove(@Param('id') id: string) {
-    return this.questionService.remove(+id);
+    return this.questionService.remove(id);
   }
 }

@@ -18,18 +18,18 @@ export class HospitalService {
     return this.prismaService.hospitals.findMany();
   };
 
-  async findOne(id: number) {
+  async findOne(id: string) {
     const hospital = await this.prismaService.hospitals.findUnique({where: {id}});
     if(!hospital) throw new NotFoundException('Hospital not found');
     return hospital;
   }
 
-  async update(id: number, dto: UpdateHospitalDto) {
+  async update(id: string, dto: UpdateHospitalDto) {
     await this.findOne(id);
     return this.prismaService.hospitals.update({where: {id}, data: dto});
   }
 
-  async remove(id: number) {
+  async remove(id: string) {
     await this.findOne(id);
     return this.prismaService.hospitals.delete({where: {id}});
   }

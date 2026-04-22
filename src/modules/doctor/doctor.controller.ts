@@ -21,19 +21,19 @@ export class DoctorController {
 
   @Get(':id')
   @HttpCode(200)
-  findOne(@Param('id') id: number) {
+  findOne(@Param('id') id: string) {
     return this.doctorService.findOne(id);
   }
 
   @Patch(':id')
   @HttpCode(200)
-  update(@Param('id') id: number, @Body() dto: UpdateDoctorDto) {
+  update(@Param('id') id: string, @Body() dto: UpdateDoctorDto) {
     return this.doctorService.update(id, dto);
   }
 
   @Delete(':id')
   @HttpCode(204)
-  remove(@Param('id') id: number) {
+  remove(@Param('id') id: string) {
     return this.doctorService.remove(id);
   }
 }
