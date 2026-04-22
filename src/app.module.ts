@@ -9,6 +9,7 @@ import { QuestionModule } from './modules/question/question.module';
 import { DepartmentModule } from './modules/department/department.module';
 import { AnswerModule } from './modules/answer/answer.module';
 import { QuestionnaireModule } from './modules/questionnaire/questionnaire.module';
+import { AuthModule } from './modules/auth/auth.module';
 
 @Module({
   imports: [
@@ -24,7 +25,8 @@ import { QuestionnaireModule } from './modules/questionnaire/questionnaire.modul
     QuestionModule,
     DepartmentModule,
     AnswerModule,
-    QuestionnaireModule
+    QuestionnaireModule,
+    AuthModule
   ],
   controllers: [],
   providers: [],

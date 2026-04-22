@@ -25,9 +25,12 @@ export class CreateAdminDto {
     message: 'Password min 6 characters long, Max 12 characters short',
   })
   password: string;
+  @IsOptional()
+  @IsString({ message: 'Refresh token must be a string' })
+  refresh_token?: string;
   @IsBoolean({ message: 'Invalid boolean value. Expected true or false' })
   is_super_admin: boolean;
   @IsOptional()
-  @IsInt({ message: 'Hospital id must be a Integer !' })
-  hospital_id?: number;
+  @IsInt({ message: 'Hospital id must be a String !' })
+  hospital_id?: string;
 }

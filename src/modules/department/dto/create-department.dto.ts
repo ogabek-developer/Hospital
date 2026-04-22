@@ -2,17 +2,15 @@ import {
   IsNotEmpty,
   IsString,
   Length,
-  IsInt,
-  Min,
+  IsUUID,
   Matches,
 } from 'class-validator';
-import { Transform, Type } from 'class-transformer';
+import { Transform } from 'class-transformer';
 
 export class CreateDepartmentDto {
-  @Type(() => Number)
-  @IsInt({ message: 'Hospital ID must be an integer' })
-  @Min(1, { message: 'Hospital ID must be greater than 0' })
-  hospital_id: number;
+  @IsUUID('4', { message: 'Hospital ID must be a valid UUID' })
+  @IsNotEmpty({ message: 'Hospital ID is required' })
+  hospital_id!: string;
 
   @Transform(({ value }) => value.trim())
   @IsString({ message: 'Department name must be a string' })
@@ -23,5 +21,5 @@ export class CreateDepartmentDto {
   @Matches(/^[A-Za-z\s]+$/, {
     message: 'Department name must contain only letters',
   })
-  name: string;
+  name!: string;
 }

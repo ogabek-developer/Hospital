@@ -24,18 +24,18 @@ export class DepartmentService {
     return this.prismaService.departments.findMany({include: {hospital: true}});
   }
 
-  async findOne(id: number) {
+  async findOne(id: string) {
     const department = await this.prismaService.departments.findUnique({where: {id}, include: {hospital: true}});
     if(!department) throw new NotFoundException('Department not found');
     return department;
   }
 
-  async update(id: number, dto: UpdateDepartmentDto) {
+  async update(id: string, dto: UpdateDepartmentDto) {
     await this.findOne(id);
     return this.prismaService.departments.update({where: {id}, data: dto});
   }
 
-  async remove(id: number) {
+  async remove(id: string) {
     await this.findOne(id);
     return this.prismaService.departments.delete({where: {id}});
   }

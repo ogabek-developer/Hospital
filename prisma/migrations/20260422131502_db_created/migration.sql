@@ -1,10 +1,11 @@
 -- CreateTable
 CREATE TABLE "Admins" (
-    "id" SERIAL NOT NULL,
+    "id" TEXT NOT NULL,
     "phone_number" TEXT NOT NULL,
     "password" TEXT NOT NULL,
+    "refresh_token" TEXT,
     "is_super_admin" BOOLEAN NOT NULL DEFAULT false,
-    "hospital_id" INTEGER,
+    "hospital_id" TEXT,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
@@ -13,12 +14,13 @@ CREATE TABLE "Admins" (
 
 -- CreateTable
 CREATE TABLE "Doctors" (
-    "id" SERIAL NOT NULL,
+    "id" TEXT NOT NULL,
     "phone_number" TEXT NOT NULL,
     "password" TEXT NOT NULL,
+    "refresh_token" TEXT,
     "specialization" TEXT NOT NULL,
-    "hospital_id" INTEGER NOT NULL,
-    "department_id" INTEGER NOT NULL,
+    "hospital_id" TEXT NOT NULL,
+    "department_id" TEXT NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
@@ -27,7 +29,7 @@ CREATE TABLE "Doctors" (
 
 -- CreateTable
 CREATE TABLE "Hospitals" (
-    "id" SERIAL NOT NULL,
+    "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "address" TEXT NOT NULL,
     "phone" TEXT NOT NULL,
@@ -39,9 +41,9 @@ CREATE TABLE "Hospitals" (
 
 -- CreateTable
 CREATE TABLE "Potients" (
-    "id" SERIAL NOT NULL,
-    "full_name" TEXT NOT NULL,
-    "hospital_id" INTEGER NOT NULL,
+    "id" TEXT NOT NULL,
+    "hospital_id" TEXT NOT NULL,
+    "phone_number" TEXT NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
@@ -50,9 +52,9 @@ CREATE TABLE "Potients" (
 
 -- CreateTable
 CREATE TABLE "Departments" (
-    "id" SERIAL NOT NULL,
+    "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
-    "hospital_id" INTEGER NOT NULL,
+    "hospital_id" TEXT NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
@@ -61,9 +63,9 @@ CREATE TABLE "Departments" (
 
 -- CreateTable
 CREATE TABLE "Questionnaires" (
-    "id" SERIAL NOT NULL,
-    "hospital_id" INTEGER NOT NULL,
-    "department_id" INTEGER NOT NULL,
+    "id" TEXT NOT NULL,
+    "hospital_id" TEXT NOT NULL,
+    "department_id" TEXT NOT NULL,
     "title" TEXT NOT NULL,
     "is_active" BOOLEAN NOT NULL DEFAULT true,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -74,8 +76,8 @@ CREATE TABLE "Questionnaires" (
 
 -- CreateTable
 CREATE TABLE "Questions" (
-    "id" SERIAL NOT NULL,
-    "questionnaire_id" INTEGER NOT NULL,
+    "id" TEXT NOT NULL,
+    "questionnaire_id" TEXT NOT NULL,
     "question_text" TEXT NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -85,10 +87,10 @@ CREATE TABLE "Questions" (
 
 -- CreateTable
 CREATE TABLE "Answers" (
-    "id" SERIAL NOT NULL,
-    "hospital_id" INTEGER NOT NULL,
-    "question_id" INTEGER NOT NULL,
-    "potient_id" INTEGER NOT NULL,
+    "id" TEXT NOT NULL,
+    "hospital_id" TEXT NOT NULL,
+    "question_id" TEXT NOT NULL,
+    "potient_id" TEXT NOT NULL,
     "answer_text" TEXT NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
@@ -118,7 +120,10 @@ CREATE UNIQUE INDEX "Hospitals_phone_key" ON "Hospitals"("phone");
 CREATE UNIQUE INDEX "Potients_id_key" ON "Potients"("id");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Potients_full_name_hospital_id_key" ON "Potients"("full_name", "hospital_id");
+CREATE UNIQUE INDEX "Potients_phone_number_key" ON "Potients"("phone_number");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Potients_hospital_id_key" ON "Potients"("hospital_id");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Departments_id_key" ON "Departments"("id");

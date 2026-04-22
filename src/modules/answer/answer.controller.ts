@@ -21,19 +21,19 @@ export class AnswerController {
 
   @Get(':id')
   @HttpCode(200)
-  findOne(@Param('id') id: number) {
+  findOne(@Param('id') id: string) {
     return this.answerService.findOne(id);
   }
 
   @Patch(':id')
   @HttpCode(200)
-  update(@Param('id') id: number, @Body() dto: UpdateAnswerDto) {
+  update(@Param('id') id: string, @Body() dto: UpdateAnswerDto) {
     return this.answerService.update(id, dto);
   }
 
   @Delete(':id')
   @HttpCode(204)
-  remove(@Param('id') id: number) {
+  remove(@Param('id') id: string) {
     return this.answerService.remove(id);
   }
 }

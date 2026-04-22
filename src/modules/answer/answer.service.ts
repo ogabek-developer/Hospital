@@ -23,7 +23,7 @@ export class AnswerService {
     return await this.prismaService.answers.findMany({include: {hospital: true, question: true}});
   }
 
-  async findOne(id: number) {
+  async findOne(id: string) {
     const doctor = await this.prismaService.answers.findUnique({
       where: { id },
       include: {hospital: true, question: true}
@@ -32,12 +32,12 @@ export class AnswerService {
     return doctor;
   }
 
-  async update(id: number, dto: UpdateAnswerDto) {
+  async update(id: string, dto: UpdateAnswerDto) {
     await this.findOne(id);
     return this.prismaService.answers.update({ where: { id }, data: dto });
   }
 
-  async remove(id: number) {
+  async remove(id: string) {
     await this.findOne(id);
     return this.prismaService.answers.delete({ where: { id } });
   }

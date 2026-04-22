@@ -28,7 +28,7 @@ export class QuestionService {
     });
   }
 
-  async findOne(id: number) {
+  async findOne(id: string) {
     const FindQuestion = await this.prismaService.questions.findUnique({
       where: { id },
       include: { questionnaire: true },
@@ -37,7 +37,7 @@ export class QuestionService {
     return FindQuestion;
   }
 
-  async update(id: number, updateQuestionDto: UpdateQuestionDto) {
+  async update(id: string, updateQuestionDto: UpdateQuestionDto) {
     await this.findOne(id);
     return this.prismaService.questions.update({
       where: { id },
@@ -45,7 +45,7 @@ export class QuestionService {
     });
   }
 
-  async remove(id: number) {
+  async remove(id: string) {
     await this.findOne(id);
     return this.prismaService.questions.delete({ where: { id } });
   }
