@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common';
 import { CreateQuestionnaireDto } from './dto/create-questionnaire.dto';
 import { UpdateQuestionnaireDto } from './dto/update-questionnaire.dto';
-import { PrismaService } from 'src/providers/prisma/prisma.service';
+import { PrismaService } from 'providers/prisma/prisma.service';
 
 @Injectable()
 export class QuestionnaireService {
