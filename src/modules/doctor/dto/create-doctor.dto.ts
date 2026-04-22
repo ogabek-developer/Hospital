@@ -57,12 +57,7 @@ export class CreateDoctorDto {
     message: 'Password min 6 characters long, max 12 characters long',
   })
   password!: string;
-
-
-  @ApiPropertyOptional({
-    example: 'jwt-refresh-token-example',
-    description: 'Refresh token (optional)',
-  })
+  
   @IsOptional()
   @IsString({ message: 'Refresh token must be a string' })
   refresh_token?: string;

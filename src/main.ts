@@ -10,6 +10,10 @@ async function bootstrap() {
     const PORT = process.env.PORT ?? 3000;
     app.setGlobalPrefix('api');
     app.use(cookieParser());
+    app.enableCors({
+      origin: ['http://192.168.1.3:3001', 'http://localhost:3001'],
+      credentials: true,
+    });
     app.useGlobalPipes(
       new ValidationPipe({
         transform: true,
@@ -22,9 +26,9 @@ async function bootstrap() {
       .build();
     const documentFactory = () => SwaggerModule.createDocument(app, config);
     SwaggerModule.setup('api/docs', app, documentFactory);
-    await app.listen(PORT, () =>
-      console.log(`Server is running on http://127.0.0.1:${PORT}`),
-    );
+    await app.listen(PORT, '0.0.0.0', () => {
+      console.log(`Server is running on http://127.0.0.1:${PORT}`);
+    });
   } catch (err) {
     throw new InternalServerErrorException(err.message);
   }
