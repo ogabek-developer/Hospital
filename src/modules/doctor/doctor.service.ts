@@ -34,7 +34,7 @@ export class DoctorService {
     const doctor = await this.prismaService.doctors.create({
       data: dto,
     });
-    const doctorUrl = `http://127.0.0.1:4000/h/${hospital.id}/${department.name}/d/${doctor.id}`;
+    const doctorUrl = `http://127.0.0.1:4000/h/${hospital.id}/${department.name.toLowerCase()}/d/${doctor.id}`;
     return {
       id: doctor.id,
       hospital_id: doctor.hospital_id,

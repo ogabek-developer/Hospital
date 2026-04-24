@@ -65,7 +65,6 @@ export class AuthService {
       sub: user.id,
       role: isAdmin ? 'admin' : 'doctor',
       is_super_admin: isAdmin ? user.is_super_admin : false,
-      
     };
     const [access_token, refresh_token] = await Promise.all([
       this.jwtService.sign(payload, {
